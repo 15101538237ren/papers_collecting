@@ -45,8 +45,7 @@ for link in links:
                             paper_dict['abstract'] = p_otp.text
                             break
                     content_dict[key]['papers'].append(paper_dict)
-                    print paper_dict
-                    urllib.urlretrieve(paper_dict['url'],os.path.join(paper_of_year_dir,filename_of_paper + '.pdf'), schedule)
+                    urllib.urlretrieve(paper_dict['url'],os.path.join(paper_of_year_dir,filename_of_paper + '.pdf'))
 with open(pickle_fp, 'wb') as pickle_file:
     pickle.dump(content_dict, pickle_file, -1)
     print "dump %s sucessful" % pickle_fp
