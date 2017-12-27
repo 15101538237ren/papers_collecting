@@ -29,29 +29,32 @@ for li in lis:
             soup_papers = BeautifulSoup(request_url(paper_collection_name,conference_papers_href))
             divs_of_papers = soup_papers('div')[5:-2]
             for div in divs_of_papers:
-                paper_dict = {}
-                div_contents = div.contents[1:6:4]
-                paper_dict['title'] = div_contents[0].text
-                links_content = div_contents[1].contents
-                abs_url = links_content[1]['href']
-                paper_download_url = links_content[3]['href']
-                paper_dict['url'] = paper_download_url
-                paper_title = paper_dict['title'].lower().replace(" ", "_")
-                paper_title = re.sub('[^a-z0-9_]+', '', paper_title)
-                print "%s %s" %(key, paper_title)
-                urllib.urlretrieve(paper_dict['url'], os.path.join(paper_of_year_dir, paper_title + '.pdf'))
-                if len(links_content) >5:
-                    sup_url = links_content[5]['href']
-                    sup_title = paper_title + "_suppl"
-                    print "%s %s" % (key, sup_title)
-                    urllib.urlretrieve(sup_url, os.path.join(paper_of_year_dir, sup_title + '.pdf'))
-                abstract_div = BeautifulSoup(request_url(paper_collection_name,urlparse.urljoin(nips_url, abs_url))).text
-                abstract_div = re.sub(u'<[^>]*>', u'', abstract_div)
-                abstract = ""
-                start_pos = abstract_div.find('%X ')
-                end_pos = abstract_div.find('Copy Endnote')
-                paper_dict['abstract'] = abstract_div[start_pos + 3:end_pos]
-                content_dict[key]['papers'].append(paper_dict)
+                try:
+                    paper_dict = {}
+                    div_contents = div.contents[1:6:4]
+                    paper_dict['title'] = div_contents[0].text
+                    links_content = div_contents[1].contents
+                    abs_url = links_content[1]['href']
+                    paper_download_url = links_content[3]['href']
+                    paper_dict['url'] = paper_download_url
+                    paper_title = paper_dict['title'].lower().replace(" ", "_")
+                    paper_title = re.sub('[^a-z0-9_]+', '', paper_title)
+                    print "%s %s" %(key, paper_title)
+                    urllib.urlretrieve(paper_dict['url'], os.path.join(paper_of_year_dir, paper_title + '.pdf'))
+                    if len(links_content) >5:
+                        sup_url = links_content[5]['href']
+                        sup_title = paper_title + "_suppl"
+                        print "%s %s" % (key, sup_title)
+                        urllib.urlretrieve(sup_url, os.path.join(paper_of_year_dir, sup_title + '.pdf'))
+                    abstract_div = BeautifulSoup(request_url(paper_collection_name,urlparse.urljoin(nips_url, abs_url))).text
+                    abstract_div = re.sub(u'<[^>]*>', u'', abstract_div)
+                    abstract = ""
+                    start_pos = abstract_div.find('%X ')
+                    end_pos = abstract_div.find('Copy Endnote')
+                    paper_dict['abstract'] = abstract_div[start_pos + 3:end_pos]
+                    content_dict[key]['papers'].append(paper_dict)
+                except:
+                    print "some error happened"
 #
 with open(pickle_fp, 'wb') as pickle_file:
     pickle.dump(content_dict, pickle_file, -1)
