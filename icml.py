@@ -32,14 +32,19 @@ for li in lis:
                 paper_dict = {}
                 div_contents = div.contents[1:6:4]
                 paper_dict['title'] = div_contents[0].text
-                links_content = div_contents[1]
-                abs_url = links_content.contents[1]['href']
-                paper_download_url = links_content.contents[3]['href']
+                links_content = div_contents[1].contents
+                print len(links_content)
+                abs_url = links_content[1]['href']
+                paper_download_url = links_content[3]['href']
                 paper_dict['url'] = paper_download_url
                 paper_title = paper_dict['title'].lower().replace(" ", "_")
                 paper_title = re.sub('[^a-z0-9_]+', '', paper_title)
                 print "%s %s" %(key, paper_title)
                 urllib.urlretrieve(paper_dict['url'], os.path.join(paper_of_year_dir, paper_title + '.pdf'))
+                if len(links_content) >5:
+                    sup_url = links_content[5]['href']
+                    sup_title = paper_title + "_suppl"
+                    urllib.urlretrieve(sup_url, os.path.join(paper_of_year_dir, sup_title + '.pdf'))
                 abstract_div = BeautifulSoup(request_url(paper_collection_name,urlparse.urljoin(nips_url, abs_url))).text
                 abstract_div = re.sub(u'<[^>]*>', u'', abstract_div)
                 abstract = ""
