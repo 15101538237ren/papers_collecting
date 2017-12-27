@@ -16,7 +16,6 @@ paper_dirname = paper_collection_name
 lis = lis[12 : 59]
 pattern = u'abstract\s*=\s*{([^{]+)}'
 re_pattern = re.compile(pattern)
-print re_pattern.findall(u'abstract = {aaa}')
 
 for li in lis:
     for key in content_dict.keys():
@@ -41,7 +40,7 @@ for li in lis:
                 paper_title = re.sub('[^a-z0-9_]+', '', paper_title)
                 print paper_title
                 urllib.urlretrieve(paper_dict['url'], os.path.join(paper_of_year_dir, paper_title + '.pdf'))
-                if len(links_content)>= 5:
+                if len(links_content.contents)>= 5:
                     paper_supplement_url = links_content.contents[5]['href']
                     paper_dict['sup_url'] = paper_supplement_url
                 abstract_div = BeautifulSoup(request_url(paper_collection_name,urlparse.urljoin(nips_url, abs_url))).text
