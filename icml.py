@@ -33,7 +33,6 @@ for li in lis:
                 div_contents = div.contents[1:6:4]
                 paper_dict['title'] = div_contents[0].text
                 links_content = div_contents[1].contents
-                print len(links_content)
                 abs_url = links_content[1]['href']
                 paper_download_url = links_content[3]['href']
                 paper_dict['url'] = paper_download_url
