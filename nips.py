@@ -28,8 +28,8 @@ for link in links:
             for link_of_paper in links_of_papers:
                 href_of_paper = link_of_paper['href']
                 filename_of_paper = href_of_paper.split('/')[-1]
-                print filename_of_paper
                 if href_of_paper.find('paper') >= 0:
+                    print filename_of_paper
                     paper_dict = {}
                     paper_dict['title'] = link_of_paper.text
                     paper_soup = BeautifulSoup(request_url(urlparse.urljoin(nips_url, href_of_paper)))
