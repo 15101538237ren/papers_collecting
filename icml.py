@@ -44,6 +44,7 @@ for li in lis:
                 if len(links_content) >5:
                     sup_url = links_content[5]['href']
                     sup_title = paper_title + "_suppl"
+                    print "%s %s" % (key, sup_title)
                     urllib.urlretrieve(sup_url, os.path.join(paper_of_year_dir, sup_title + '.pdf'))
                 abstract_div = BeautifulSoup(request_url(paper_collection_name,urlparse.urljoin(nips_url, abs_url))).text
                 abstract_div = re.sub(u'<[^>]*>', u'', abstract_div)
