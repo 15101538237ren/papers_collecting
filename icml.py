@@ -38,7 +38,7 @@ for li in lis:
                 paper_dict['url'] = paper_download_url
                 paper_title = paper_dict['title'].lower().replace(" ", "_")
                 paper_title = re.sub('[^a-z0-9_]+', '', paper_title)
-                print paper_title
+                print "%s %s" %(key, paper_title)
                 urllib.urlretrieve(paper_dict['url'], os.path.join(paper_of_year_dir, paper_title + '.pdf'))
                 abstract_div = BeautifulSoup(request_url(paper_collection_name,urlparse.urljoin(nips_url, abs_url))).text
                 abstract_div = re.sub(u'<[^>]*>', u'', abstract_div)
