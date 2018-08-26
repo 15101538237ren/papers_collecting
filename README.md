@@ -1,5 +1,5 @@
 # papers_collecting
-Using python scraper to download all the NIPS and ICML papers from https://papers.nips.cc and http://proceedings.mlr.press
+Using python scraper to download all the NIPS(https://papers.nips.cc) and ICML(http://proceedings.mlr.press) papers.
 
 #### Usage for python 2:
 
